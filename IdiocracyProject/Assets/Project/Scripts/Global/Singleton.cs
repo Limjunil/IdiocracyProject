@@ -5,31 +5,27 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
-    private static T _instance = default;
+    private static T instance = default;
 
     public static T Instance
     {
         get
         {
-            if (Singleton<T>._instance == default || _instance == default)
+            if (Singleton<T>.instance == default || instance == default)
             {
-                Singleton<T>._instance = Func.CreateObj<T>(typeof(T).ToString());
+                Singleton<T>.instance = Func.CreateObj<T>(typeof(T).ToString());
 
-                DontDestroyOnLoad(_instance.gameObject);
+                DontDestroyOnLoad(instance.gameObject);
             }   // if : 인스턴스가 비어 있을 때 새로 인스턴스화 한다.
 
-            return _instance;
+            return instance;
         }
     }
 
 
     public void Create()
     {
-        this.Init();
+        
     }   // Create()
 
-    protected virtual void Init()
-    {
-        /* Do something */
-    }
 }
