@@ -4,33 +4,46 @@ using UnityEngine;
 
 public class SubObj : MonoBehaviour
 {
+    private bool isConnect = false;
     private string objName = string.Empty;
 
     private void OnEnable()
     {
-        GameManager.OnMessage += OnAction;
+        OnConnect();
     }
 
     private void OnDisable()
     {
-        GameManager.OnMessage -= OnAction;
+        if(isConnect == true)
+        {
+            OnConnect();
+        }
     }
 
-    private void Awake()
+    private void Start()
     {
         objName = gameObject.name;
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnAction()
     {
-        Debug.Log($"구독자는 {objName} 입니다.");
+        Debug.Log($"현재 구독자 {objName} 입니다.");
     }
+
+    public void OnConnect()
+    {
+        if(isConnect == false)
+        {
+            isConnect = true;
+            GameManager.OnMessage += OnAction;
+        }
+        else
+        {
+            isConnect = false;
+            GameManager.OnMessage -= OnAction;
+        }
+    }
+
+
 
 }
